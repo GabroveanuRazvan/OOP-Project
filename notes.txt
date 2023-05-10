@@ -1,0 +1,24 @@
+    doua ierarhii diferite de mostenire:
+-customer deriva din shopping_cart
+-flower devine clasa abstracta care o sa fie baza pentru alte clase
+
+    mostenire multipla:
+-facem o clasa legata de personal details ale clientului
+-clientul o sa derive din shopping_cart si clasa asta de date personale
+
+    !!constructor cu lista de initializare
+    !! protected pentru datele florii(de exemplu, mai vedem)
+    !! destructor virtual sa fie folosit
+    !! upcasting si downcasting
+- la alocare dinamica folosim try...catch
+- cand accesam elemntul unui vector alocat dinamic folosind un index folosim try_catch
+- EXCEPTIE CUSTOM ce deriva din std::exception
+    !! static si metode statice
+
+
+    !!try la constructor pe flori sa vada daca exista cat se  cere
+    !! pentru asta se face exceptie derivata
+    !! pretul la flori trebuie sa fie static
+
+    !! de intrebat
+    functie friend pentru flori care imi seteaza valorile statice nu merge
