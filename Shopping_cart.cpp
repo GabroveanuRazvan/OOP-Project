@@ -5,13 +5,13 @@
 
 //methods
 void Shopping_cart::buy_cart_contents() {
-    for(auto current_flower:flowers)
+    for(const auto& current_flower:flowers)
         current_flower->buy_flower();
-    for(auto current_bouquet:bouquets)
+    for(const auto& current_bouquet:bouquets)
         current_bouquet->buy_bouquet();
 }
 bool Shopping_cart::same_flower_type(const flower &new_flower) {
-    for (auto current_flower: flowers) {
+    for (const auto& current_flower: flowers) {
         if (typeid(*current_flower) == typeid(new_flower))
             return true;
     }
@@ -19,7 +19,7 @@ bool Shopping_cart::same_flower_type(const flower &new_flower) {
 }
 
 void Shopping_cart::add_to_cart(Bouquet* chosen_bouquet) {
-    bouquets.push_back(chosen_bouquet);
+    bouquets.push_back(std::shared_ptr<Bouquet>(chosen_bouquet));
 }
 
 void Shopping_cart::add_to_cart(flower* new_flower) {
@@ -28,7 +28,7 @@ void Shopping_cart::add_to_cart(flower* new_flower) {
             throw bouquet_capacity_error("Shopping cart flowers capacity at maximum"); //throws this error
         else if (this->same_flower_type(*new_flower)) // if the new flower has already been added
             throw same_flower_type_error("Same flower type already added in shopping cart flowers"); // throws another exception
-        flowers.push_back(new_flower); // if everything is correct the new flower is added
+        flowers.push_back(std::shared_ptr<flower>(new_flower)); // if everything is correct the new flower is added
     } catch (const std::exception &exception1) { //catches one error
         std::cerr << exception1.what() << '\n'; // prints it
 
@@ -66,17 +66,17 @@ void Shopping_cart::remove_cart_bouquet(int index) {
 }
 float Shopping_cart::get_cart_price() const {
     float cart_price=0.0;
-    for(auto current_flower:flowers)
+    for(const auto& current_flower:flowers)
     {
         cart_price+= get_flower_price(*current_flower);
     }
-    for(auto current_bouquet:bouquets)
+    for(const auto& current_bouquet:bouquets)
     {
         cart_price+=current_bouquet->get_bouquet_price();
     }
     return cart_price;
 }
-Bouquet* Shopping_cart::cart_bouquet_at(int index) { // the same as a [] operator, but just for bouquet
+std::shared_ptr<Bouquet> Shopping_cart::cart_bouquet_at(int index) { // the same as a [] operator, but just for bouquet
     try{
         if(index<0||index>=bouquets.size())
             throw std::out_of_range("The bouquet at specified index is out of range");
@@ -92,7 +92,7 @@ Bouquet* Shopping_cart::cart_bouquet_at(int index) { // the same as a [] operato
 void Shopping_cart::print_cart_bouquets() const {
     int i=1;
     std::cout<<"Bouquets of the shopping cart: "<<"\n\n";
-    for(  auto current_bouquet:bouquets)
+    for(  const auto& current_bouquet:bouquets)
     {
         std::cout<<"Bouquet "<<i<<"\n\n";
         i++;
@@ -103,7 +103,7 @@ void Shopping_cart::print_cart_bouquets() const {
 void Shopping_cart::print_cart_flowers() const {
     int i=1;
     std::cout<<"Flowers in the shopping cart: "<<"\n\n";
-    for(auto flower:flowers)
+    for(const auto& flower:flowers)
     {
         std::cout<<"Flower "<<i<<":"<<'\n';
         i++;
@@ -118,17 +118,7 @@ void Shopping_cart::print_cart_contents() const {
 }
 //constructors
 Shopping_cart::Shopping_cart():flowers(),bouquets(){} // shopping cart starts as empty
-Shopping_cart::~Shopping_cart() {
-    this->buy_cart_contents(); //Sets the to_value of each flower to true so that their destructor does not add back the used flowers
-    for(auto current_flower:flowers) //deallocates each flower
-    {
-        delete current_flower;
-    }
-    for(auto current_bouquet:bouquets) // deallocates each bouquet
-    {
-        delete current_bouquet;
-    }
-}
+
 //methods that use shopping_cart
 float apply_discount(float price,const std::function<float(float)>& discount_function)
 {

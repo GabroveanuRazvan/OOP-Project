@@ -5,13 +5,13 @@
 
 //methods
 void Bouquet::buy_bouquet() { //sets to to_buy value of each flower to true
-    for(auto current_flower:bq)
+    for(const auto & current_flower:bq)
     {
         current_flower->buy_flower();
     }
 }
 bool Bouquet::same_flower_type(const flower &new_flower) {
-    for (auto current_flower: bq) { //iterates through bq and searches using RTTI if the new_flower type is the same ase another type in bq
+    for (const auto& current_flower: bq) { //iterates through bq and searches using RTTI if the new_flower type is the same ase another type in bq
         if (typeid(*current_flower) == typeid(new_flower))
             return true; //returns true
     }
@@ -24,7 +24,7 @@ void Bouquet::add_flower(flower* new_flower) {
             throw bouquet_capacity_error("Bouquet capacity at maximum"); //throws this error
         else if (this->same_flower_type(*new_flower)) // if the new flower has already been added
             throw same_flower_type_error("Same flower type already added in bouquet"); // throws another exception
-        bq.push_back(new_flower); // if everything is correct the new flower is added
+        bq.push_back(std::shared_ptr<flower>(new_flower)); // if everything is correct the new flower is added
     } catch (const std::exception &exception1) { //catches one error
         std::cerr << exception1.what() << '\n'; // prints it
 
@@ -53,7 +53,7 @@ void Bouquet::remove_flower(int index){ //removes flower on index i
 void Bouquet::print_bouquet_content() const {
     int i=1;
     std::cout<<"Bouquet contents: "<<"\n\n";
-    for(auto flower:bq)
+    for(const auto& flower:bq)
     {
         std::cout<<"Flower "<<i<<":"<<'\n';
         i++;
@@ -65,7 +65,7 @@ void Bouquet::print_bouquet_content() const {
 
 float Bouquet::get_bouquet_price() const {
     float bouquet_price = 0.0;
-    for(auto current_flower:bq) // iterates throuqh bq vector and adds the price of each flower to the final price
+    for(const auto& current_flower:bq) // iterates throuqh bq vector and adds the price of each flower to the final price
     {
         bouquet_price+=current_flower->get_price();
     }
@@ -74,14 +74,8 @@ float Bouquet::get_bouquet_price() const {
 
 //constructors
 Bouquet::Bouquet() : bq() {}  // no parameter constructor
-Bouquet::~Bouquet(){ // destroyes the contents of each pointer in the vector
-    for(auto current_flower:bq)
-    {
-        delete current_flower;
-    }
-}
 //operators
-flower* Bouquet::operator[](int index)
+std::shared_ptr<flower> Bouquet::operator[](int index)
 {
     try{
         if(index<0||index>bq.size())

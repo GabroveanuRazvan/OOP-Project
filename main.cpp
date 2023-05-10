@@ -45,6 +45,13 @@ int main() {
 
 flower::set_menu();
 flower* ceva=flower::new_flower("rose",2);
-std::cout<<ceva->get_price();
+flower* altceva=flower::new_flower("rose",2);
+Bouquet b;
+Shopping_cart s;
+b.add_flower(ceva);
+s.add_to_cart(altceva);
+s.add_to_cart(&b);
+s.print_cart_contents();
+
     return 0;
 }
