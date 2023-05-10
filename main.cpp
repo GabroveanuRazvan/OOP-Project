@@ -5,6 +5,7 @@
 #include "flower.h"
 #include "Bouquet.h"
 #include "Shopping_cart.h"
+#include "custom_set.h"
 #include <sstream>
 #include "Client.h"
 
@@ -44,10 +45,11 @@ int main() {
 //////c.print_cart_bouquets();
 
 flower::set_menu();
-flower* ceva=flower::new_flower("rose");
-flower* altceva=flower::new_flower("tulip");
-std::cout<<ceva->get_price();
-
-
+//flower* ceva=flower::new_flower("rose");
+//flower* altceva=flower::new_flower("tulip");
+//std::cout<<ceva->get_price();
+Bouquet b;
+b.add_flower(flower::new_flower("rose"));
+b.add_flower(flower::new_flower("tulip"));
     return 0;
 }

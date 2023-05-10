@@ -3,7 +3,7 @@
 #include "flower_count_exception.h"
 #include <algorithm>
 #include "Bouquet.h"
-
+#include "custom_set.h"
 //methods
 void Bouquet::buy_bouquet() { //sets to to_buy value of each flower to true
     for(const auto & current_flower:bq)
@@ -23,8 +23,11 @@ void Bouquet::add_flower(flower* new_flower) {
     try {
         if (bq.size() == bouquet_capacity)  // if the max capacity is reached
             throw bouquet_capacity_error("Bouquet capacity at maximum"); //throws this error
-        else if (this->same_flower_type(*new_flower)) // if the new flower has already been added
-            throw same_flower_type_error("Same flower type already added in bouquet"); // throws another exception
+        else{
+            custom_set<std::shared_ptr<flower>> bouquet_clone(bq);
+            if (bouquet_clone.size()!=bq.size()) // if the new flower has already been added
+                throw same_flower_type_error("Same flower type already added in bouquet"); // throws another exception
+        }
         bq.push_back(std::shared_ptr<flower>(new_flower)); // if everything is correct the new flower is added
         std::sort(bq.begin(),bq.end(),[](const std::shared_ptr<flower>& f1,const std::shared_ptr<flower>& f2){return f1->chosen_flower_count<f2->chosen_flower_count;});
     } catch (const std::exception &exception1) { //catches one error
