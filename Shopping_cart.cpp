@@ -29,6 +29,7 @@ void Shopping_cart::add_to_cart(flower* new_flower) {
         else if (this->same_flower_type(*new_flower)) // if the new flower has already been added
             throw same_flower_type_error("Same flower type already added in shopping cart flowers"); // throws another exception
         flowers.push_back(std::shared_ptr<flower>(new_flower)); // if everything is correct the new flower is added
+        std::sort(flowers.begin(),flowers.end(),[](const std::shared_ptr<flower>& f1,const std::shared_ptr<flower>& f2){return f1->chosen_flower_count<f2->chosen_flower_count;});
     } catch (const std::exception &exception1) { //catches one error
         std::cerr << exception1.what() << '\n'; // prints it
 
@@ -49,6 +50,7 @@ void Shopping_cart::remove_cart_flower(int index){ //removes flower on index i
         if(index<0||index>=flowers.size())
             throw std::out_of_range("Removal shopping cart flower index out of range"); //throws out of range exception if index not in range
         flowers.erase(flowers.begin()+index);
+        std::sort(flowers.begin(),flowers.end(),[](const std::shared_ptr<flower>& f1,const std::shared_ptr<flower>& f2){return f1->chosen_flower_count<f2->chosen_flower_count;});
     }catch(const std::exception&e){
         std::cerr<<e.what()<<'\n'; //catches it and prints it to standart error output
         exit(1);

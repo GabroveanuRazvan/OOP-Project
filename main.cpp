@@ -45,13 +45,13 @@ int main() {
 
 flower::set_menu();
 flower* ceva=flower::new_flower("rose",2);
-flower* altceva=flower::new_flower("rose",2);
+flower* altceva=flower::new_flower("tulip",3);
 Bouquet b;
-Shopping_cart s;
-b.add_flower(ceva);
-s.add_to_cart(altceva);
-s.add_to_cart(&b);
-s.print_cart_contents();
+    b.add_flower(altceva);
+    b.add_flower(ceva);
+
+
+b.print_bouquet_content();
 
     return 0;
 }
