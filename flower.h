@@ -16,6 +16,7 @@ protected:
 public:
     //methods
     static flower* new_flower(const std::string& new_flower_name,int count);
+    static flower* new_flower(const std::string& new_flower_name);
     static int get_total_shop_flowers() ;
     static void set_menu();
     virtual void print_flower_info() const=0; // make an upcast to it

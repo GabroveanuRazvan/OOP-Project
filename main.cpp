@@ -44,14 +44,10 @@ int main() {
 //////c.print_cart_bouquets();
 
 flower::set_menu();
-flower* ceva=flower::new_flower("rose",2);
-flower* altceva=flower::new_flower("tulip",3);
-Bouquet b;
-    b.add_flower(altceva);
-    b.add_flower(ceva);
+flower* ceva=flower::new_flower("rose");
+flower* altceva=flower::new_flower("tulip");
+std::cout<<ceva->get_price();
 
-
-b.print_bouquet_content();
 
     return 0;
 }
