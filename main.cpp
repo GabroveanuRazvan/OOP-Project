@@ -5,6 +5,7 @@
 #include "flower.h"
 #include "Bouquet.h"
 #include "Shopping_cart.h"
+#include <sstream>
 #include "Client.h"
 
 auto ten_percent_discount = [](float price) { return price * 0.9; };
@@ -41,6 +42,9 @@ int main() {
 //////c.remove_bouquet(0);
 //////c.remove_bouquet(0);
 //////c.print_cart_bouquets();
+
 flower::set_menu();
+flower* ceva=flower::new_flower("rose",2);
+std::cout<<ceva->get_price();
     return 0;
 }

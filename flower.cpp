@@ -1,33 +1,49 @@
 #include<iostream>
+#include <sstream>
 #include "flower.h"
 #include "Rose_flower.h"
 #include "Tulip_flower.h"
 //static initialize
 int flower::total_shop_flowers=0;
 //methods
+flower* flower::new_flower(const std::string& new_flower_name, int count)
+{
+
+    if(new_flower_name=="rose"||new_flower_name=="Rose")
+        return new Rose(count);
+    if(new_flower_name=="tulip"||new_flower_name=="Tulip")
+        return new Tulip(count);
+    throw(std::runtime_error("Unknown flower or flower type not in shop"));
+}
 int flower::get_total_shop_flowers() {
     return total_shop_flowers;
 }
 void flower::set_menu()
 {
     int count;float price;
+    std::stringstream in(
+            "20\n"
+            "20\n"
+            "20\n"
+            "20\n"
 
+    );
     ///rose declarations
-    std::cout<<"Give rose price: ";
-    std::cin>>price;
+    //std::cout<<"Give rose price: ";
+    in>>price;
     Rose::set_rose_price(price);
-    std::cout<<"Give rose count: ";
-    std::cin>>count;
+    //std::cout<<"Give rose count: ";
+    in>>count;
     Rose::set_total_rose_count(count);
 
     ///tulip declarations
-    std::cout<<"Give tulip price: ";
-    std::cin>>price;
+    //std::cout<<"Give tulip price: ";
+    in>>price;
     Tulip::set_tulip_price(price);
-    std::cout<<"Give tulip count: ";
-    std::cin>>count;
+    //std::cout<<"Give tulip count: ";
+    in>>count;
     Tulip::set_total_tulip_count(count);
-    std::cout<<'\n';
+    //std::cout<<'\n';
 }
 
 //constructors

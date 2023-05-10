@@ -11,9 +11,11 @@ protected:
     static int total_shop_flowers;
     bool to_buy;
     virtual void buy_flower()=0;//sets the value of to_buy to True
-public:
 
+
+public:
     //methods
+    static flower* new_flower(const std::string& new_flower_name,int count);
     static int get_total_shop_flowers() ;
     static void set_menu();
     virtual void print_flower_info() const=0; // make an upcast to it
